@@ -24,6 +24,10 @@ import unicodedata
 import gzip
 
 
+# ───────────────────────────────────────────────────────────────────────────────
+# Lecture / Normalisation corpus de texte | Construction du modèle n-gram
+# ───────────────────────────────────────────────────────────────────────────────
+
 def normalize_text(text, remove_accents=True):
     text = text.lower()
     # Suppression des accents
@@ -66,6 +70,12 @@ def save_model(model, output_file, compress=False):
         with open(output_file, 'w', encoding='utf8') as f:
             json.dump(model, f, ensure_ascii=False, indent=2)
     return output_file
+
+
+# ───────────────────────────────────────────────────────────────────────────────
+# Chargement du modèle n-gram | Génération de texte
+# ───────────────────────────────────────────────────────────────────────────────
+
 def load_model(model_file):
     if model_file.endswith('.gz'):
         with gzip.open(model_file, 'rt', encoding='utf8') as f:
@@ -93,6 +103,11 @@ def generate_text(model, seed, length):
                 seed = text[-len(seed):]  # Met à jour le n-gramme
                 break
     return text
+
+
+# ───────────────────────────────────────────────────────────────────────────────
+# Déclaration des arguements dans la fonction principale
+# ───────────────────────────────────────────────────────────────────────────────
 
 # Exemple d'utilisation
 if __name__ == "__main__":
@@ -160,6 +175,11 @@ if __name__ == "__main__":
         help="Whether to compress the model file.",
     )
 
+
+# ───────────────────────────────────────────────────────────────────────────────
+# CLI : Conditions d'utilisation des arguments en mode 'analyse'
+# ───────────────────────────────────────────────────────────────────────────────
+
     args = parser.parse_args()
     if args.mode == "analyse" :
         #verifie les paramatres
@@ -181,6 +201,12 @@ if __name__ == "__main__":
         print(f"Texte normalisé : {clean_text[:100]}...")  # Affiche les 100 premiers caractères du texte normalisé
         ngram_model = build_ngram_model(clean_text, args.order)
         save_model(ngram_model, args.output_model, compress=args.compress)
+
+
+# ───────────────────────────────────────────────────────────────────────────────
+# CLI : Conditions d'utilisation des arguments en mode 'generate'
+# ───────────────────────────────────────────────────────────────────────────────
+
     elif args.mode == "generate" :
         #verifie les paramatres
         if not args.model:
@@ -199,6 +225,10 @@ if __name__ == "__main__":
             print("Le paramètre --length est requis pour le mode 'generate'.")
             exit(1)
 
+
+# ───────────────────────────────────────────────────────────────────────────────
+# CLI : Conditions d'utilisation des arguments en mode 'both' et formatage du texte
+# ───────────────────────────────────────────────────────────────────────────────
         
         model = load_model(args.model)
         print(f"Modèle n-gram chargé depuis {args.model}")
