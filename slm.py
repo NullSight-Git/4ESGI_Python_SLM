@@ -1,3 +1,20 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Description  : Script de génération de texte basé sur un modèle n-gram
+#               et une interface en ligne de commande (CLI).
+#               Le script permet d'analyser un corpus de texte, de construire
+#               un modèle n-gram, de sauvegarder le modèle et de générer du texte
+#               à partir du modèle.
+
+# Date         : 2023-10-12
+# Last Update  : 2023-10-12
+# Version      : v1.0
+# Authors      : VALLADE Allan,
+#                CASAGRANDE Michael,
+#                OUALI Mohamed,
+#                CHAMBRE Ryan,
+#                FALANDRY Enzo
+# ─────────────────────────────────────────────────────────────────────────────
+
 import argparse
 import os
 import json
